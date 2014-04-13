@@ -1,4 +1,4 @@
-package com.xem3.str8upsquares;
+package com.xem3.ouyademo;
 
 import tv.ouya.console.api.*;
 import tv.ouya.console.api.OuyaController;

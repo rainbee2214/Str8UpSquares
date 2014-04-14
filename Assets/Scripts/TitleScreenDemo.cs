@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TitleScreenDemo : MonoBehaviour {
+public class TitleScreenDemo : MonoBehaviour 
+{
 	public GUIText helloWorld, downText,upText;//, rightText, leftText;
+	public OuyaPlayer playerOuya;
 
 	void Start () 
 	{
@@ -11,6 +13,9 @@ public class TitleScreenDemo : MonoBehaviour {
 
 	void Update () 
 	{
+		// To check for the O button being pressed, and then when it's released
+//		if (OuyaInput.GetButtonDown(OuyaButton.O,playerOuya))
+//		if (OuyaInput.GetButtonUp(OuyaButton.O, playerOuya))
 		if (Input.GetButton("S"))
 		{
 			helloWorld.gameObject.transform.position = new Vector2(0.5f,0.8f);

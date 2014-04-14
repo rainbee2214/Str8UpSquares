@@ -26,20 +26,20 @@ public class WarpController : MonoBehaviour {
 		{
 			renderer.material.color = enabledColor;
 			particle.enableEmission = true;
-
-			if (OuyaInput.GetButtonDown(OuyaButton.O,playerOuya))
-			{
-				player.rigidbody2D.transform.position = warpPartner.rigidbody2D.transform.position;
-				//Debug.Log("Warped.");
-			}
-
-
-//			if (Input.GetButtonDown("Q"))
-//			{
 //
+//			if (OuyaInput.GetButtonDown(OuyaButton.O,playerOuya))
+//			{
 //				player.rigidbody2D.transform.position = warpPartner.rigidbody2D.transform.position;
-//				Debug.Log("Warped.");
+//				//Debug.Log("Warped.");
 //			}
+
+
+			if (Input.GetButtonDown("Q"))
+			{
+
+				player.rigidbody2D.transform.position = warpPartner.rigidbody2D.transform.position;
+				Debug.Log("Warped.");
+			}
 		}
 		else
 		{

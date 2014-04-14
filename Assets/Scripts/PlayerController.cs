@@ -29,53 +29,53 @@ public class PlayerController : MonoBehaviour
 
 		//Only one type of movement can work at a time
 		//Ouya controller movement
-		Vector2 movement = OuyaInput.GetJoystick(OuyaJoystick.LeftStick, player);
-		rigidbody2D.velocity = movement * speed;
+//		Vector2 movement = OuyaInput.GetJoystick(OuyaJoystick.LeftStick, player);
+//		rigidbody2D.velocity = movement * speed;
 //		if (OuyaInput.GetButton(OuyaButton.O,player))
 //		{
 //			rigidbody2D.velocity = new Vector2(3,3);
 //		}
 		//Movement on a computer
-//		direction = new Vector2(0f, 0f);
-//		if (Input.GetButton("W"))
-//		{
-//			direction.y = speed;
-//			rigidbody2D.velocity = direction;
-//		}
-//		if (Input.GetButtonUp("W"))
-//		{
-//			direction.y = 0;
-//			rigidbody2D.velocity = direction;
-//		}
-//		if (Input.GetButton("S"))
-//		{
-//			direction.y = -speed;
-//			rigidbody2D.velocity = direction;;
-//		}
-//		if (Input.GetButtonUp("S"))
-//		{
-//			direction.y = 0;
-//			rigidbody2D.velocity = direction;
-//		}
-//		if (Input.GetButton("A"))
-//		{
-//			direction.x = -speed;
-//			rigidbody2D.velocity = direction;
-//		}
-//		if (Input.GetButtonUp("A"))
-//		{
-//			direction.x = 0;
-//			rigidbody2D.velocity = direction;
-//		}
-//		if (Input.GetButton("D"))
-//		{
-//			direction.x = speed;
-//			rigidbody2D.velocity = direction;
-//		}
-//		if (Input.GetButtonUp("D"))
-//		{
-//			direction.x = 0;
-//			rigidbody2D.velocity = direction;
-//		}
+		direction = new Vector2(0f, 0f);
+		if (Input.GetButton("W"))
+		{
+			direction.y = speed;
+			rigidbody2D.velocity = direction;
+		}
+		if (Input.GetButtonUp("W"))
+		{
+			direction.y = 0;
+			rigidbody2D.velocity = direction;
+		}
+		if (Input.GetButton("S"))
+		{
+			direction.y = -speed;
+			rigidbody2D.velocity = direction;;
+		}
+		if (Input.GetButtonUp("S"))
+		{
+			direction.y = 0;
+			rigidbody2D.velocity = direction;
+		}
+		if (Input.GetButton("A"))
+		{
+			direction.x = -speed;
+			rigidbody2D.velocity = direction;
+		}
+		if (Input.GetButtonUp("A"))
+		{
+			direction.x = 0;
+			rigidbody2D.velocity = direction;
+		}
+		if (Input.GetButton("D"))
+		{
+			direction.x = speed;
+			rigidbody2D.velocity = direction;
+		}
+		if (Input.GetButtonUp("D"))
+		{
+			direction.x = 0;
+			rigidbody2D.velocity = direction;
+		}
 	}
 }

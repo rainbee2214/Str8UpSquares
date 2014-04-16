@@ -5,7 +5,6 @@ using System.Collections.Generic;
 public class MissileAttackController : MonoBehaviour 
 {
 	public GameObject missile;
-	//public OuyaPlayer playerOuya;
 
 	public List<GameObject> missiles;
 

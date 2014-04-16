@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 using System.Collections;
 
 public class PlayerController : MonoBehaviour, 
@@ -13,6 +14,15 @@ OuyaSDK.IResumeListener
 	public float triggerThreshold = 0.1f; 							// the threshold before the trigger is pressed
 
 	public Vector2 direction;
+
+
+	public GameObject missile;
+	public List<GameObject> missiles;
+	public int currentMissileAmount;
+	public int missileReloads;
+
+	public float fireRate = 0.12f;
+	private float nextFireTime;
 
 	void Awake()
 	{
@@ -61,8 +71,7 @@ OuyaSDK.IResumeListener
 		{
 			direction.y = -OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_Y, player); // - to make it not inverted
 		}
-
-
+		
 		//Movement on a computer
 
 		if (Input.GetButton("W"))
@@ -99,5 +108,77 @@ OuyaSDK.IResumeListener
 		}
 
 		rigidbody2D.velocity = direction * speed;
+
+		//Missiles
+		if ((((Mathf.Abs(OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_RSTICK_X, player)) > joystickDeadzone) ||
+		    (Mathf.Abs(OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_RSTICK_Y, player)) > joystickDeadzone) ||
+		    Input.GetButtonDown("I") || Input.GetButtonDown("K") || Input.GetButtonDown("J") || Input.GetButtonDown("L"))) &&
+		    Time.time > nextFireTime)
+		{
+			if (currentMissileAmount == 0 && missileReloads == 0)
+			{
+				Debug.Log("No ammo");
+			}
+			else
+			{
+				if (currentMissileAmount == 0) 
+				{
+					Debug.Log("Clip emptied.");
+					reload();
+				}
+				shoot();
+				nextFireTime = Time.time + fireRate;
+			}
+		}
+
+	}
+	
+	void shoot()
+	{
+		GameObject temp = Instantiate (missile, transform.position, Quaternion.identity) as GameObject;
+		temp.name = ("Missile:"+missileReloads+currentMissileAmount);
+		
+		Vector2 missileDirection = new Vector2(0f,0f);
+		int missileSpeed = 12;
+
+		//Missile launching
+		if (Mathf.Abs(OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_RSTICK_X, player)) > joystickDeadzone)
+		{
+			if (OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_RSTICK_X, player) > 0) missileDirection.x = 1;
+			if (OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_RSTICK_X, player) < 0) missileDirection.x = -1;
+		}
+		if (Mathf.Abs(OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_RSTICK_Y, player)) > joystickDeadzone)
+		{
+			if (OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_RSTICK_Y, player) < 0) missileDirection.y = 1; 
+			if (OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_RSTICK_Y, player) > 0) missileDirection.y = -1;
+		}
+
+		if (Input.GetButtonDown("I"))
+		{
+			missileDirection.y = 1;
+		}
+		if (Input.GetButtonDown("K"))
+		{
+			missileDirection.y = -1;
+		}
+		if (Input.GetButtonDown("J"))
+		{
+			missileDirection.x = -1;
+		}
+		if (Input.GetButtonDown("L"))
+		{
+			missileDirection.x = 1;
+		}
+
+		temp.rigidbody2D.velocity = missileDirection * missileSpeed;
+		missiles.Add(temp);
+		currentMissileAmount--;
+	}
+
+	void reload()
+	{
+		missiles.Clear();
+		missileReloads--;
+		currentMissileAmount = 10;
 	}
 }

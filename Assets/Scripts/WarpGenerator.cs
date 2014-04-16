@@ -22,7 +22,7 @@ public class WarpGenerator : MonoBehaviour {
 				warps[i].gameObject.GetComponent<WarpController>().warpPartner = warps[i+1];
 		}
 
-		warp.active = false;
+		warp.gameObject.SetActive(false);
 	}
 	
 	// Update is called once per frame

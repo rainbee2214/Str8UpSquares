@@ -9,8 +9,8 @@ public class MissileAttackController : MonoBehaviour
 
 	public List<GameObject> missiles;
 
-	public int currentMissileAmount = 10;
-	public int missileReloads = 3;
+	public int currentMissileAmount;
+	public int missileReloads;
 
 	void Start () 
 	{
@@ -60,24 +60,20 @@ public class MissileAttackController : MonoBehaviour
 		if (Input.GetButtonDown("I"))
 		{
 			missileDirection.y = missileSpeed;
-			temp.rigidbody2D.velocity = missileDirection;
 		}
 		if (Input.GetButtonDown("K"))
 		{
 			missileDirection.y = -missileSpeed;
-			temp.rigidbody2D.velocity = missileDirection;
 		}
 		if (Input.GetButtonDown("J"))
 		{
 			missileDirection.x = -missileSpeed;
-			temp.rigidbody2D.velocity = missileDirection;
 		}
 		if (Input.GetButtonDown("L"))
 		{
 			missileDirection.x = missileSpeed;
-			temp.rigidbody2D.velocity = missileDirection;
 		}
-
+		temp.rigidbody2D.velocity = missileDirection;
 		missiles.Add(temp);
 		currentMissileAmount--;
 	}

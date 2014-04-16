@@ -18,14 +18,15 @@ public class BackgroundController : MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		Debug.Log("Collision1.");
+		other.renderer.enabled = true;
+		if(other.tag != "Player")Debug.Log("Collision1.");
 	}
 
 	void OnTriggerExit2D(Collider2D other)
 	{
 		Debug.Log("Collision2.");
-		
-		Destroy(other.gameObject);
+		other.renderer.enabled = false;
+		//Destroy(other.gameObject);
 	}
 
 	void OnTriggerStay2D(Collider2D other)

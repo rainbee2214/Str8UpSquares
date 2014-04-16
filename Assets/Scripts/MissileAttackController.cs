@@ -19,7 +19,7 @@ public class MissileAttackController : MonoBehaviour
 
 	void Update () 
 	{
-		if ( Input.GetButtonDown("R") && ( Input.GetButton("I") || Input.GetButton("K") || Input.GetButton("J") || Input.GetButton("L") ) )
+		if ( ( Input.GetButtonDown("I") || Input.GetButtonDown("K") || Input.GetButtonDown("J") || Input.GetButtonDown("L") ) )
 		{
 			if (currentMissileAmount == 0 && missileReloads == 0)
 			{
@@ -55,24 +55,24 @@ public class MissileAttackController : MonoBehaviour
 		temp.name = ("Missile:"+missileReloads+currentMissileAmount);
 
 		Vector2 missileDirection = new Vector2(0f,0f);
-		int missileSpeed = 6;
+		int missileSpeed = 12;
 
-		if (Input.GetButton("I"))
+		if (Input.GetButtonDown("I"))
 		{
 			missileDirection.y = missileSpeed;
 			temp.rigidbody2D.velocity = missileDirection;
 		}
-		if (Input.GetButton("K"))
+		if (Input.GetButtonDown("K"))
 		{
 			missileDirection.y = -missileSpeed;
 			temp.rigidbody2D.velocity = missileDirection;
 		}
-		if (Input.GetButton("J"))
+		if (Input.GetButtonDown("J"))
 		{
 			missileDirection.x = -missileSpeed;
 			temp.rigidbody2D.velocity = missileDirection;
 		}
-		if (Input.GetButton("L"))
+		if (Input.GetButtonDown("L"))
 		{
 			missileDirection.x = missileSpeed;
 			temp.rigidbody2D.velocity = missileDirection;

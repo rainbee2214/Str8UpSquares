@@ -61,49 +61,43 @@ OuyaSDK.IResumeListener
 		{
 			direction.y = -OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_Y, player); // - to make it not inverted
 		}
-		rigidbody2D.velocity = direction * speed;
+
 
 		//Movement on a computer
 
 		if (Input.GetButton("W"))
 		{
-			direction.y = speed;
-			rigidbody2D.velocity = direction;
+			direction.y = 1;
 		}
 		if (Input.GetButtonUp("W"))
 		{
 			direction.y = 0;
-			rigidbody2D.velocity = direction;
 		}
 		if (Input.GetButton("S"))
 		{
-			direction.y = -speed;
-			rigidbody2D.velocity = direction;;
+			direction.y = -1;
 		}
 		if (Input.GetButtonUp("S"))
 		{
 			direction.y = 0;
-			rigidbody2D.velocity = direction;
 		}
 		if (Input.GetButton("A"))
 		{
-			direction.x = -speed;
-			rigidbody2D.velocity = direction;
+			direction.x = -1;
 		}
 		if (Input.GetButtonUp("A"))
 		{
 			direction.x = 0;
-			rigidbody2D.velocity = direction;
 		}
 		if (Input.GetButton("D"))
 		{
-			direction.x = speed;
-			rigidbody2D.velocity = direction;
+			direction.x = 1;
 		}
 		if (Input.GetButtonUp("D"))
 		{
 			direction.x = 0;
-			rigidbody2D.velocity = direction;
 		}
+
+		rigidbody2D.velocity = direction * speed;
 	}
 }

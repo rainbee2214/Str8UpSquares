@@ -26,7 +26,7 @@ public class BackgroundController : MonoBehaviour
 	{
 		Debug.Log("Collision2.");
 		other.renderer.enabled = false;
-		//Destroy(other.gameObject);
+		if (other.tag == "Missile") Destroy(other.gameObject);
 	}
 
 	void OnTriggerStay2D(Collider2D other)

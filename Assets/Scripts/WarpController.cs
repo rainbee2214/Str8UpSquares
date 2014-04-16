@@ -8,7 +8,7 @@ public class WarpController : MonoBehaviour {
 
 	public ParticleSystem particle;
 
-	public OuyaPlayer playerOuya;
+	//public OuyaPlayer playerOuya;
 	public GameObject player;
 	public GameObject warpPartner;
 

@@ -7,8 +7,8 @@ public class PlayerController : MonoBehaviour
 
 	public int speed = 3; 											// Player Move Speed
 	public bool continuousScan = true; 								// do we want to scan for trigger and d-pad button events ?
-	public OuyaPlayer player = OuyaPlayer.P01; 						// the player/controller we want to observe
-	public DeadzoneType deadzoneType = DeadzoneType.CircularMap; 	// the type of deadzone we want to use for convenience access
+	//public OuyaPlayer player = OuyaPlayer.P01; 						// the player/controller we want to observe
+	//public DeadzoneType deadzoneType = DeadzoneType.CircularMap; 	// the type of deadzone we want to use for convenience access
 	public float deadzone = 0.25f; 									// the size of the deadzone
 	public float triggerThreshold = 0.1f; 							// the threshold before the trigger is pressed
 
@@ -17,15 +17,15 @@ public class PlayerController : MonoBehaviour
 	void Start () 
 	{
 
-		OuyaInput.SetContinuousScanning(continuousScan);			// set button state scanning to receive input state events for trigger and d-pads
-		OuyaInput.SetDeadzone(deadzoneType, deadzone);				// define the deadzone if you want to use advanced joystick and trigger access
-		OuyaInput.SetTriggerThreshold(triggerThreshold); 			// do one controller update here to get everything started as soon as possible
-		OuyaInput.UpdateControllers();
+		//OuyaInput.SetContinuousScanning(continuousScan);			// set button state scanning to receive input state events for trigger and d-pads
+		//OuyaInput.SetDeadzone(deadzoneType, deadzone);				// define the deadzone if you want to use advanced joystick and trigger access
+		//OuyaInput.SetTriggerThreshold(triggerThreshold); 			// do one controller update here to get everything started as soon as possible
+		//OuyaInput.UpdateControllers();
 	}
 
 	void Update()
 	{
-		OuyaInput.UpdateControllers();
+		//OuyaInput.UpdateControllers();
 
 		//Only one type of movement can work at a time
 		//Ouya controller movement

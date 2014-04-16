@@ -1,42 +1,70 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerController : MonoBehaviour 
+public class PlayerController : MonoBehaviour, 
+OuyaSDK.IMenuButtonUpListener,
+OuyaSDK.IMenuAppearingListener,
+OuyaSDK.IPauseListener,
+OuyaSDK.IResumeListener 
 {
-
-
 	public int speed = 3; 											// Player Move Speed
-	public bool continuousScan = true; 								// do we want to scan for trigger and d-pad button events ?
-	//public OuyaPlayer player = OuyaPlayer.P01; 						// the player/controller we want to observe
-	//public DeadzoneType deadzoneType = DeadzoneType.CircularMap; 	// the type of deadzone we want to use for convenience access
-	public float deadzone = 0.25f; 									// the size of the deadzone
+	public OuyaSDK.OuyaPlayer player = OuyaSDK.OuyaPlayer.player1;	// Player controller
+	public float joystickDeadzone = 0.25f; 									// the size of the deadzone
 	public float triggerThreshold = 0.1f; 							// the threshold before the trigger is pressed
 
 	public Vector2 direction;
 
-	void Start () 
+	void Awake()
 	{
-
-		//OuyaInput.SetContinuousScanning(continuousScan);			// set button state scanning to receive input state events for trigger and d-pads
-		//OuyaInput.SetDeadzone(deadzoneType, deadzone);				// define the deadzone if you want to use advanced joystick and trigger access
-		//OuyaInput.SetTriggerThreshold(triggerThreshold); 			// do one controller update here to get everything started as soon as possible
-		//OuyaInput.UpdateControllers();
+		OuyaSDK.registerMenuButtonUpListener(this);
+		OuyaSDK.registerMenuAppearingListener(this);
+		OuyaSDK.registerPauseListener(this);
+		OuyaSDK.registerResumeListener(this);
+		Input.ResetInputAxes();
+	}
+	void OnDestroy()
+	{
+		OuyaSDK.unregisterMenuButtonUpListener(this);
+		OuyaSDK.unregisterMenuAppearingListener(this);
+		OuyaSDK.unregisterPauseListener(this);
+		OuyaSDK.unregisterResumeListener(this);
+		Input.ResetInputAxes();
+	}
+	
+	public void OuyaMenuButtonUp()
+	{
+	}
+	
+	public void OuyaMenuAppearing()
+	{
+	}
+	
+	public void OuyaOnPause()
+	{
+	}
+	
+	public void OuyaOnResume()
+	{
 	}
 
 	void Update()
 	{
-		//OuyaInput.UpdateControllers();
-
-		//Only one type of movement can work at a time
-		//Ouya controller movement
-//		Vector2 movement = OuyaInput.GetJoystick(OuyaJoystick.LeftStick, player);
-//		rigidbody2D.velocity = movement * speed;
-//		if (OuyaInput.GetButton(OuyaButton.O,player))
-//		{
-//			rigidbody2D.velocity = new Vector2(3,3);
-//		}
-		//Movement on a computer
 		direction = new Vector2(0f, 0f);
+
+		//Ouya
+		//If joystick is past deadzone, apply movement
+		if (Mathf.Abs(OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_X, player)) > joystickDeadzone)
+		{
+			direction.x = OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_X, player);
+		}
+		if (Mathf.Abs(OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_Y, player)) > joystickDeadzone)
+		{
+			direction.y = -OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_Y, player); // - to make it not inverted
+		}
+		rigidbody2D.velocity = direction * speed;
+
+		//Movement on a computer
+
 		if (Input.GetButton("W"))
 		{
 			direction.y = speed;

@@ -20,6 +20,9 @@ OuyaSDK.IResumeListener
 	public List<GameObject> missiles;
 	public int currentMissileAmount;
 	public int missileReloads;
+	public int missileClipSize = 25;
+
+	public GUIText ammoText;
 
 	public float fireRate = 0.12f;
 	private float nextFireTime;
@@ -59,6 +62,8 @@ OuyaSDK.IResumeListener
 
 	void Update()
 	{
+		ammoText.text = "Ammo: " + ((missileReloads * missileClipSize)+currentMissileAmount);
+
 		if (OuyaExampleCommon.GetButtonDown(OuyaSDK.KeyEnum.BUTTON_O, player))
 		{
 			Application.LoadLevel("LevelFour");
@@ -148,7 +153,6 @@ OuyaSDK.IResumeListener
 				nextFireTime = Time.time + fireRate;
 			}
 		}
-
 	}
 	
 	void shoot()

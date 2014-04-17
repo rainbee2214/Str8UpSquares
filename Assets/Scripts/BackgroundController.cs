@@ -18,29 +18,38 @@ public class BackgroundController : MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		other.renderer.enabled = true;
-		if(other.tag != "Player")Debug.Log("Collision1.");
+		if (other.tag == "Wall") 
+		{
+			Debug.Log("Wall");
+		}
+		else
+			other.renderer.enabled = true;
+
 	}
 
 	void OnTriggerExit2D(Collider2D other)
 	{
-		Debug.Log("Collision2.");
-		other.renderer.enabled = false;
+		if (other.tag == "Wall") 
+		{
+			Debug.Log("Wall2");
+		}
+		else
+			other.renderer.enabled = false;
 		if (other.tag == "Missile") Destroy(other.gameObject);
 	}
 
 	void OnTriggerStay2D(Collider2D other)
 	{
-		//Debug.Log("Inside background.");
+
 	}
 
 	void OnCollisionEnter2D(Collision2D other)
 	{
-		Debug.Log("Collision3.");
+
 	}
 	
 	void OnCollisionExit2D(Collision2D other)
 	{
-		Debug.Log("Collision4.");
+
 	}
 }

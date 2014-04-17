@@ -261,7 +261,7 @@ public static class OuyaSDK
     static OuyaSDK()
     {
         // Log the ouya-unity-plugin version:
-        Debug.Log(string.Format("ouya-unity-plugin version: {0}", VERSION));
+        // Debug.Log(string.Format("ouya-unity-plugin version: {0}", VERSION));
 
         try
         {

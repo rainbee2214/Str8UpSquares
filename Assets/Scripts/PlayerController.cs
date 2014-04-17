@@ -75,10 +75,11 @@ OuyaSDK.IResumeListener
 		//Update GUI Ammo count
 		ammoText.text = "Ammo: " + ((missileReloads * missileClipSize)+currentMissileAmount);
 
+
 		#region Button Presses
 		if (OuyaExampleCommon.GetButtonDown(OuyaSDK.KeyEnum.BUTTON_O, player))
 		{
-			Application.LoadLevel("LevelFour");
+
 		}
 		if (OuyaExampleCommon.GetButtonDown(OuyaSDK.KeyEnum.BUTTON_U, player))
 		{
@@ -86,7 +87,7 @@ OuyaSDK.IResumeListener
 		}
 		if (OuyaExampleCommon.GetButtonDown(OuyaSDK.KeyEnum.BUTTON_Y, player))
 		{
-			Application.LoadLevel("Menu");
+
 		}
 		if (OuyaExampleCommon.GetButtonDown(OuyaSDK.KeyEnum.BUTTON_A, player))
 		{

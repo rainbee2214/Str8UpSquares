@@ -12,12 +12,12 @@ public class GameController : MonoBehaviour
 	//GUI References
 	public GUIText scoreText;
 	public GUIText targetColorText;
-	public GUIText ammoText;
 	
 	//Game Stats		
 	public bool typeMouseClick;
 	public bool typeMouseOver;
-	
+
+	//Controller reference
 	public OuyaSDK.OuyaPlayer player = OuyaSDK.OuyaPlayer.player1;
 	
 	#region Properties
@@ -40,13 +40,6 @@ public class GameController : MonoBehaviour
 	{
 		get{return totalFlips;}
 		set{totalFlips += value;}
-	}
-	
-	private int totalClicks = 0;
-	public int TotalClicks
-	{
-		get{return totalClicks;}
-		set{totalClicks += value;}
 	}
 	
 	private bool playerDead = false;
@@ -89,6 +82,7 @@ public class GameController : MonoBehaviour
 	void Update()
 	{
 		scoreText.text = "Score: " + score;
+
 	}
 	
 	void OnGUI()
@@ -122,7 +116,7 @@ public class GameController : MonoBehaviour
 		
 		//Create a PlayerData class and set values
 		PlayerData data = new PlayerData();
-		data.totalClicks = totalClicks;
+		//data.totalClicks = totalClicks;
 		data.totalFlips = totalFlips;
 		
 		//Take the seriazable PlayerData class that data is, and write it to file
@@ -144,7 +138,7 @@ public class GameController : MonoBehaviour
 			//Close the file
 			file.Close();
 			//Set the loaded data
-			totalClicks = data.totalClicks;
+			//totalClicks = data.totalClicks;
 			totalFlips = data.totalFlips;
 		}
 	}
@@ -155,6 +149,6 @@ public class GameController : MonoBehaviour
 class PlayerData
 {
 	//Use private and get/set, this is quick
-	public int totalClicks;
+	//public int totalClicks;
 	public int totalFlips;
 }

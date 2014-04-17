@@ -59,6 +59,24 @@ OuyaSDK.IResumeListener
 
 	void Update()
 	{
+		if (OuyaExampleCommon.GetButtonDown(OuyaSDK.KeyEnum.BUTTON_O, player))
+		{
+			Application.LoadLevel("LevelFour");
+		}
+		if (OuyaExampleCommon.GetButtonDown(OuyaSDK.KeyEnum.BUTTON_U, player))
+		{
+			
+		}
+		if (OuyaExampleCommon.GetButtonDown(OuyaSDK.KeyEnum.BUTTON_Y, player))
+		{
+			Application.LoadLevel("Menu");
+		}
+		if (OuyaExampleCommon.GetButtonDown(OuyaSDK.KeyEnum.BUTTON_A, player))
+		{
+			
+		}
+
+
 		direction = new Vector2(0f, 0f);
 
 		//Ouya

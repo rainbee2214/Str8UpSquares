@@ -4,7 +4,8 @@ using System.Collections;
 public class GridGenerator : MonoBehaviour 
 {
 	public static GridGenerator gridGenerator;
-	
+	public GameObject wall;
+
 	#region Properties
 
 	private int size = 1;

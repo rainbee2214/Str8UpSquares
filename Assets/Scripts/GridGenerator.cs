@@ -4,7 +4,7 @@ using System.Collections;
 public class GridGenerator : MonoBehaviour 
 {
 	public static GridGenerator gridGenerator;
-	public GameObject wall;
+
 
 	#region Properties
 
@@ -16,8 +16,9 @@ public class GridGenerator : MonoBehaviour
 	}
 	#endregion
 	
-	
-	
+	public GameObject wall;
+	public GameObject[] walls;
+
 	public GameObject gridSquare;
 	public GameObject[][] grid;
 	
@@ -38,6 +39,7 @@ public class GridGenerator : MonoBehaviour
 	
 	void Start () 
 	{
+		walls = new GameObject[4];
 		currentWidth = startingWidth;
 		currentHeight = startingHeight;
 		startingColour = Random.Range(0,7);
@@ -74,6 +76,10 @@ public class GridGenerator : MonoBehaviour
 				Destroy(grid[x][y].gameObject);
 			}
 		}
+		for (int i = 0; i < 4; i++)
+		{
+			Destroy(walls[i].gameObject);
+		}
 	}
 	
 	void generateGrid (int width, int height, int colour)
@@ -100,6 +106,27 @@ public class GridGenerator : MonoBehaviour
 				
 			}
 		}
+
+		//Walls
+		Vector2 wallTemp = new Vector2(0f,0f);
+		for (int i = 0; i < 4; i++)
+		{
+			walls[i] = Instantiate (wall, wallTemp, Quaternion.identity) as GameObject;
+			walls[i].name = ("Wall " + i);
+		}
+
+		//Top, bottom, left, right
+		walls[0].transform.localScale = new Vector3(width, 1, 1);
+		walls[1].transform.localScale = new Vector3(width, 1, 1);
+		walls[2].transform.localScale = new Vector3(1, height, 1);
+		walls[3].transform.localScale = new Vector3(1, height, 1);
+
+		walls[0].transform.position = new Vector2((width - 1)/ 2,height);		// Top
+		walls[1].transform.position = new Vector2((width - 1)/ 2,-1);				// Bottom
+		walls[2].transform.position = new Vector2(-1,(height - 1) / 2);  			// Left
+		walls[3].transform.position = new Vector2(width,(height - 1) / 2);		// Right
+
+
 	}
 	
 	void Awake () 

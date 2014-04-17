@@ -8,42 +8,51 @@ OuyaSDK.IMenuAppearingListener,
 OuyaSDK.IPauseListener,
 OuyaSDK.IResumeListener 
 {
-	public int speed = 3; 											// Player Move Speed
-	public OuyaSDK.OuyaPlayer player = OuyaSDK.OuyaPlayer.player1;	// Player controller
-	public float joystickDeadzone = 0.25f; 									// the size of the deadzone
-	public float triggerThreshold = 0.1f; 							// the threshold before the trigger is pressed
-
+	//Player Stats
+	public int speed = 3;   // Player Move Speed
+	
+	//Ouya Input
+	public OuyaSDK.OuyaPlayer player = OuyaSDK.OuyaPlayer.player1;  // Player controller
+	public float joystickDeadzone = 0.25f;                                  // the size of the deadzone
+	public float triggerThreshold = 0.1f;                           // the threshold before the trigger is pressed
 	public Vector2 direction;
-
-
+	
+	//Weapons
 	public GameObject missile;
 	public List<GameObject> missiles;
 	public int currentMissileAmount;
 	public int missileReloads;
 	public int missileClipSize = 25;
-
+	public float fireRate = 0.12f;
+	public float missileSpeed = 12;
+	
+	private float nextFireTime;
+	
+	//GUI Ammo Reference
 	public GUIText ammoText;
 
-	public float fireRate = 0.12f;
-	private float nextFireTime;
-
+	#region Enter/Exit Script
 	void Awake()
 	{
+		//Start Ouya Input
 		OuyaSDK.registerMenuButtonUpListener(this);
 		OuyaSDK.registerMenuAppearingListener(this);
 		OuyaSDK.registerPauseListener(this);
 		OuyaSDK.registerResumeListener(this);
-		Input.ResetInputAxes();
+		UnityEngine.Input.ResetInputAxes();
 	}
 	void OnDestroy()
 	{
+		//Stop Ouya Input
 		OuyaSDK.unregisterMenuButtonUpListener(this);
 		OuyaSDK.unregisterMenuAppearingListener(this);
 		OuyaSDK.unregisterPauseListener(this);
 		OuyaSDK.unregisterResumeListener(this);
-		Input.ResetInputAxes();
+		UnityEngine.Input.ResetInputAxes();
 	}
+	#endregion
 	
+	#region Ouya Input
 	public void OuyaMenuButtonUp()
 	{
 	}
@@ -59,11 +68,14 @@ OuyaSDK.IResumeListener
 	public void OuyaOnResume()
 	{
 	}
+	#endregion
 
 	void Update()
 	{
+		//Update GUI Ammo count
 		ammoText.text = "Ammo: " + ((missileReloads * missileClipSize)+currentMissileAmount);
 
+		#region Button Presses
 		if (OuyaExampleCommon.GetButtonDown(OuyaSDK.KeyEnum.BUTTON_O, player))
 		{
 			Application.LoadLevel("LevelFour");
@@ -80,13 +92,13 @@ OuyaSDK.IResumeListener
 		{
 			
 		}
+		#endregion
 
-
+		#region Movement
 		direction = new Vector2(0f, 0f);
 
 		//Ouya
-		//If joystick is past deadzone, apply movement
-		if (Mathf.Abs(OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_X, player)) > joystickDeadzone)
+		if (Mathf.Abs(OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_X, player)) > joystickDeadzone) //If joystick is past deadzone, apply movement
 		{
 			direction.x = OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_X, player);
 		}
@@ -95,8 +107,7 @@ OuyaSDK.IResumeListener
 			direction.y = -OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_Y, player); // - to make it not inverted
 		}
 		
-		//Movement on a computer
-
+		//PC
 		if (Input.GetButton("W"))
 		{
 			direction.y = 1;
@@ -129,10 +140,11 @@ OuyaSDK.IResumeListener
 		{
 			direction.x = 0;
 		}
-
+		//Apply movement vector
 		rigidbody2D.velocity = direction * speed;
+		#endregion
 
-		//Missiles
+		#region Weapons
 		if ((((Mathf.Abs(OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_RSTICK_X, player)) > joystickDeadzone) ||
 		    (Mathf.Abs(OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_RSTICK_Y, player)) > joystickDeadzone) ||
 		    Input.GetButtonDown("I") || Input.GetButtonDown("K") || Input.GetButtonDown("J") || Input.GetButtonDown("L"))) &&
@@ -149,21 +161,24 @@ OuyaSDK.IResumeListener
 					Debug.Log("Clip emptied.");
 					reload();
 				}
-				shoot();
+				Shoot();
 				nextFireTime = Time.time + fireRate;
 			}
 		}
+		#endregion
 	}
 	
-	void shoot()
+	void Shoot()
 	{
+		//Instantiate the missile, save the reference, name it
 		GameObject temp = Instantiate (missile, transform.position, Quaternion.identity) as GameObject;
 		temp.name = ("Missile:"+missileReloads+currentMissileAmount);
-		
+
+		//Movement Variables
 		Vector2 missileDirection = new Vector2(0f,0f);
-		int missileSpeed = 12;
 
 		//Missile launching
+		//Ouya
 		if (Mathf.Abs(OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_RSTICK_X, player)) > joystickDeadzone)
 		{
 			if (OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_RSTICK_X, player) > 0) missileDirection.x = 1;
@@ -175,6 +190,7 @@ OuyaSDK.IResumeListener
 			if (OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_RSTICK_Y, player) > 0) missileDirection.y = -1;
 		}
 
+		//PC
 		if (Input.GetButtonDown("I"))
 		{
 			missileDirection.y = 1;
@@ -192,6 +208,7 @@ OuyaSDK.IResumeListener
 			missileDirection.x = 1;
 		}
 
+		//Apply direction * speed, save reference, update ammo count
 		temp.rigidbody2D.velocity = missileDirection * missileSpeed;
 		missiles.Add(temp);
 		currentMissileAmount--;
@@ -199,8 +216,8 @@ OuyaSDK.IResumeListener
 
 	void reload()
 	{
-		missiles.Clear();
-		missileReloads--;
-		currentMissileAmount = 10;
+		missiles.Clear(); 	//Destroy all current bullets
+		missileReloads--; 
+		currentMissileAmount = missileClipSize;
 	}
 }

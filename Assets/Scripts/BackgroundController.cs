@@ -5,6 +5,7 @@ public class BackgroundController : MonoBehaviour
 {
 
 	public GameObject player;
+	public GameObject gridGenerator;
 
 	void Start () 
 	{
@@ -13,28 +14,19 @@ public class BackgroundController : MonoBehaviour
 
 	void Update () 
 	{
-	
+		//int size = 0;
+		//size = gridGenerator.gameObject.GetComponent<GridGenerator>().currentWidth;
+		//gameObject.transform.localScale = new Vector3(size,size,1);
 	}
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other.tag == "Wall") 
-		{
-			Debug.Log("Wall");
-		}
-		else
-			other.renderer.enabled = true;
-
+		if (other.tag != "Wall") other.renderer.enabled = true;
 	}
 
 	void OnTriggerExit2D(Collider2D other)
 	{
-		if (other.tag == "Wall") 
-		{
-			Debug.Log("Wall2");
-		}
-		else
-			other.renderer.enabled = false;
+		if (other.tag != "Wall") other.renderer.enabled = false;
 		if (other.tag == "Missile") Destroy(other.gameObject);
 	}
 

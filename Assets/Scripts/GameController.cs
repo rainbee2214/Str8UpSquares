@@ -11,8 +11,6 @@ public class GameController : MonoBehaviour
 	
 	//GUI References
 	public GUIText scoreText;
-	public GUIText targetColorText;
-	
 	//Game Stats		
 	public bool typeMouseClick;
 	public bool typeMouseOver;
@@ -82,7 +80,6 @@ public class GameController : MonoBehaviour
 	void Update()
 	{
 		scoreText.text = "Score: " + score;
-
 	}
 	
 	void OnGUI()

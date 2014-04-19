@@ -25,8 +25,15 @@ OuyaSDK.IResumeListener
 	public int missileClipSize = 25;
 	public float fireRate = 0.12f;
 	public float missileSpeed = 12;
-	
+
+	//Time Variables
 	private float nextFireTime;
+	private float scaleTime;
+	private bool scaledUp;
+	private float speedTime;
+	private bool spedUp;
+	public float scaleUpTimeLength;
+	public float speedUpTimeLength;
 	
 	//GUI Ammo Reference
 	public GUIText ammoText;
@@ -167,6 +174,20 @@ OuyaSDK.IResumeListener
 			}
 		}
 		#endregion
+	
+		#region Powerups
+		if (spedUp && Time.time > speedTime)
+		{
+			speed -= 5;
+			spedUp = false;
+		}
+
+		if (scaledUp && Time.time > scaleTime)
+		{
+			transform.localScale = new Vector3(1f, 1f, 1f);
+			scaledUp = false;
+		}
+		#endregion
 	}
 	
 	void Shoot()
@@ -222,5 +243,44 @@ OuyaSDK.IResumeListener
 		missiles.Clear(); 	//Destroy all current bullets
 		missileReloads--; 
 		currentMissileAmount = missileClipSize;
+	}
+
+	public void ApplyPowerUp(int PUType)
+	{
+		switch(PUType)
+		{
+		case 0: //SizeUp
+			ScaleUp();
+			break;
+		case 1: //SpeedUp
+			SpeedUp();
+			break;
+		case 2: //AmmoUp
+			currentMissileAmount += 50;
+			break;
+		case 3: //Score
+			GameController.controller.Score = 100;
+			break;
+		case 4: //TBD
+			break;
+		case 5: //TBD
+			break;
+		case 6: //TBD
+			break;
+		}
+	}
+
+	void ScaleUp()
+	{
+		transform.localScale = new Vector3(2f, 2f, 2f);
+		scaledUp = true;
+		scaleTime = Time.time + scaleUpTimeLength;
+	}
+
+	void SpeedUp()
+	{
+		speed += 5;
+		spedUp = true;
+		speedTime = Time.time + speedUpTimeLength;
 	}
 }

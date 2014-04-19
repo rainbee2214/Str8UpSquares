@@ -21,8 +21,11 @@ public class GridSquareController : MonoBehaviour
 	{
 		if (other.tag != "Background")
 		{
-			GameController.controller.Score = pointsPerFlip; //Increment score
-			GameController.controller.TotalFlips = 1;
+			if (other.tag == "Player" || other.tag == "Missile")
+			{
+				GameController.controller.Score = pointsPerFlip; //Increment score
+				GameController.controller.TotalFlips = 1;
+			}
 			currentColour += 1;
 			if (currentColour == 16) currentColour = 0;
 			renderer.material.color = colours[currentColour];

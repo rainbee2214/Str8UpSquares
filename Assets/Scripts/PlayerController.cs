@@ -9,31 +9,33 @@ OuyaSDK.IPauseListener,
 OuyaSDK.IResumeListener 
 {
 	//Player Stats
-	public int speed = 3;   // Player Move Speed
+	public int startSpeed = 3;   	// Player Move Speed
+	public int boostedSpeed = 6;	//Turbo speed
+	private int speed;
 	
 	//Ouya Input
 	public OuyaSDK.OuyaPlayer player = OuyaSDK.OuyaPlayer.player1;  // Player controller
-	public float joystickDeadzone = 0.25f;                                  // the size of the deadzone
+	public float joystickDeadzone = 0.25f;                          // the size of the joystick deadzone
 	public float triggerThreshold = 0.1f;                           // the threshold before the trigger is pressed
-	public Vector2 direction;
+	private Vector2 moveDirection; 									// Used for movement
 	
 	//Weapons
-	public GameObject missile;
-	public List<GameObject> missiles;
-	public int currentMissileAmount;
-	public int missileReloads;
-	public int missileClipSize = 25;
-	public float fireRate = 0.12f;
-	public float missileSpeed = 12;
+	public GameObject missile; 			//Prefab of missile to shoot
+	public List<GameObject> missiles; 	//List of shot missiles
+	public int currentMissileAmount; 	//Amount of missiles currently loaded
+	public int missileReloads; 			//Clips remaining
+	public int missileClipSize = 25; 	//Clip size
+	public float fireRate = 0.12f; 		//Fire speed
+	public float missileSpeed = 12; 	//Missile speed
 
 	//Time Variables
-	private float nextFireTime;
-	private float scaleTime;
-	private bool scaledUp;
-	private float speedTime;
-	private bool spedUp;
-	public float scaleUpTimeLength;
-	public float speedUpTimeLength;
+	private float nextFireTime; 		//Stores time player can shoot next
+	private float scaleTime; 			//Stores time player is scaled up until
+	private bool scaledUp; 				//is the player scaled up?
+	private float speedTime; 			//Stores time player is sped up until
+	private bool spedUp; 				//is the player sped up?
+	public float scaleUpTimeLength; 	//How long the player will be scaled up for
+	public float speedUpTimeLength; 	//How long the player will be sped up for
 	
 	//GUI Ammo Reference
 	public GUIText ammoText;
@@ -79,9 +81,20 @@ OuyaSDK.IResumeListener
 
 	void Update()
 	{
-		//Update GUI Ammo count
-		ammoText.text = "Ammo: " + ((missileReloads * missileClipSize)+currentMissileAmount);
-
+		#region Powerups
+		if (spedUp && Time.time > speedTime)
+		{
+			speed = startSpeed;
+			spedUp = false;
+		}
+		
+		if (scaledUp && Time.time > scaleTime)
+		{
+			transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+			rigidbody2D.mass = 1;
+			scaledUp = false;
+		}
+		#endregion
 
 		#region Button Presses
 		if (OuyaExampleCommon.GetButtonDown(OuyaSDK.KeyEnum.BUTTON_O, player))
@@ -103,51 +116,51 @@ OuyaSDK.IResumeListener
 		#endregion
 
 		#region Movement
-		direction = new Vector2(0f, 0f);
+		moveDirection = new Vector2(0f, 0f);
 
 		//Ouya
 		if (Mathf.Abs(OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_X, player)) > joystickDeadzone) //If joystick is past deadzone, apply movement
 		{
-			direction.x = OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_X, player);
+			moveDirection.x = OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_X, player);
 		}
 		if (Mathf.Abs(OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_Y, player)) > joystickDeadzone)
 		{
-			direction.y = -OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_Y, player); // - to make it not inverted
+			moveDirection.y = -OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_Y, player); // - to make it not inverted
 		}
 
 
 		//PC
 		if (Input.GetButton("W"))
 		{
-			direction.y = 1;
+			moveDirection.y = 1;
 		}
 		if (Input.GetButtonUp("W"))
 		{
-			direction.y = 0;
+			moveDirection.y = 0;
 		}
 		if (Input.GetButton("S"))
 		{
-			direction.y = -1;
+			moveDirection.y = -1;
 		}
 		if (Input.GetButtonUp("S"))
 		{
-			direction.y = 0;
+			moveDirection.y = 0;
 		}
 		if (Input.GetButton("A"))
 		{
-			direction.x = -1;
+			moveDirection.x = -1;
 		}
 		if (Input.GetButtonUp("A"))
 		{
-			direction.x = 0;
+			moveDirection.x = 0;
 		}
 		if (Input.GetButton("D"))
 		{
-			direction.x = 1;
+			moveDirection.x = 1;
 		}
 		if (Input.GetButtonUp("D"))
 		{
-			direction.x = 0;
+			moveDirection.x = 0;
 		}
 
 		//Apply movement vector
@@ -175,21 +188,9 @@ OuyaSDK.IResumeListener
 				nextFireTime = Time.time + fireRate;
 			}
 		}
-		#endregion
-	
-		#region Powerups
-		if (spedUp && Time.time > speedTime)
-		{
-			speed -= 5;
-			spedUp = false;
-		}
 
-		if (scaledUp && Time.time > scaleTime)
-		{
-			transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-			rigidbody2D.mass = 1;
-			scaledUp = false;
-		}
+		//Update GUI Ammo count
+		ammoText.text = "Ammo: " + currentMissileAmount + " / " + missileReloads;
 		#endregion
 	}
 
@@ -258,10 +259,24 @@ OuyaSDK.IResumeListener
 		switch(PUType)
 		{
 		case 0: //SizeUp
-			ScaleUp();
+			if (scaledUp)
+			{
+				scaleTime += scaleUpTimeLength;
+			}
+			else
+			{
+				ScaleUp();
+			}
 			break;
 		case 1: //SpeedUp
-			SpeedUp();
+			if (spedUp)
+			{
+				speedTime += speedUpTimeLength;
+			}
+			else
+			{
+				SpeedUp();
+			}
 			break;
 		case 2: //AmmoUp
 			currentMissileAmount += 50;
@@ -288,7 +303,7 @@ OuyaSDK.IResumeListener
 
 	void SpeedUp()
 	{
-		speed += 5;
+		speed = boostedSpeed;
 		spedUp = true;
 		speedTime = Time.time + speedUpTimeLength;
 	}

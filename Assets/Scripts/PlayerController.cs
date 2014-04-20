@@ -115,7 +115,7 @@ OuyaSDK.IResumeListener
 			direction.y = -OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_LSTICK_Y, player); // - to make it not inverted
 		}
 
-		/*
+
 		//PC
 		if (Input.GetButton("W"))
 		{
@@ -149,7 +149,7 @@ OuyaSDK.IResumeListener
 		{
 			direction.x = 0;
 		}
-		*/
+
 		//Apply movement vector
 		rigidbody2D.velocity = direction * speed;
 		#endregion
@@ -186,7 +186,7 @@ OuyaSDK.IResumeListener
 
 		if (scaledUp && Time.time > scaleTime)
 		{
-			transform.localScale = new Vector3(1f, 1f, 1f);
+			transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
 			scaledUp = false;
 		}
 		#endregion
@@ -217,7 +217,7 @@ OuyaSDK.IResumeListener
 			//if (OuyaExampleCommon.GetAxis(OuyaSDK.KeyEnum.AXIS_RSTICK_Y, player) > 0) missileDirection.y = -1;
 		}
 
-		/*
+
 		//PC
 		if (Input.GetButtonDown("I"))
 		{
@@ -235,7 +235,7 @@ OuyaSDK.IResumeListener
 		{
 			missileDirection.x = 1;
 		}
-		*/
+
 
 		//Apply direction * speed, save reference, update ammo count
 		temp.rigidbody2D.velocity = missileDirection * missileSpeed;

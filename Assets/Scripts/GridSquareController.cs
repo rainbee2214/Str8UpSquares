@@ -27,7 +27,7 @@ public class GridSquareController : MonoBehaviour
 				GameController.controller.TotalFlips = 1;
 			}
 			currentColour += 1;
-			if (currentColour == 16) currentColour = 0;
+			if (currentColour == 8) currentColour = 0;
 			renderer.material.color = colours[currentColour];
 		}
 

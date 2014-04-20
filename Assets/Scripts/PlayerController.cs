@@ -187,6 +187,7 @@ OuyaSDK.IResumeListener
 		if (scaledUp && Time.time > scaleTime)
 		{
 			transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+			rigidbody2D.mass = 1;
 			scaledUp = false;
 		}
 		#endregion
@@ -280,6 +281,7 @@ OuyaSDK.IResumeListener
 	void ScaleUp()
 	{
 		transform.localScale = new Vector3(2f, 2f, 2f);
+		rigidbody2D.mass = 5;
 		scaledUp = true;
 		scaleTime = Time.time + scaleUpTimeLength;
 	}

@@ -7,7 +7,7 @@ public class ItemScript : MonoBehaviour
 
 	void Start () 
 	{
-		itemType = Random.Range(0,6);
+		itemType = Random.Range(0,3);
 	}
 
 	void OnTriggerEnter2D(Collider2D other)

@@ -13,7 +13,7 @@ public class Pool : MonoBehaviour
 
     void Awake()
     {
-        current = this;
+        currentPool = this;
     }
 
     void Start()

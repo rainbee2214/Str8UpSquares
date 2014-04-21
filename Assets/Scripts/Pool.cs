@@ -5,11 +5,18 @@ using System.Collections.Generic;
 public class Pool : MonoBehaviour
 {
     public static Pool currentPool;
-    public GameObject pooledObject;
-    public int poolSize = 100;
-    public bool canGrow = true;
+	//Grid
+    public GameObject gridObject;
+    public int gridSize = 100;
+    public bool gridGrow = true;
 
-    public List<GameObject> pooledObjects;
+	//Bullets
+	public GameObject bulletObject;
+	public int bulletSize = 100;
+	public bool bulletGrow = true;
+    
+	public List<GameObject> pooledGrids;
+	public List<GameObject> pooledBullets;
 
     void Awake()
     {
@@ -18,31 +25,59 @@ public class Pool : MonoBehaviour
 
     void Start()
     {
-        pooledObjects = new List<GameObject>();
-        for (int i=0; i<poolSize; i++)
+		//Grids
+        pooledGrids = new List<GameObject>();
+        for (int i=0; i<gridSize; i++)
         {
-            GameObject obj = (GameObject)Instantiate(pooledObject);
+            GameObject obj = (GameObject)Instantiate(gridObject);
             obj.SetActive(false);
-            pooledObjects.Add(obj);
+            pooledGrids.Add(obj);
         }
+		//Bullets
+		pooledBullets = new List<GameObject>();
+		for (int i=0; i<bulletSize; i++)
+		{
+			GameObject obj = (GameObject)Instantiate(bulletObject);
+			obj.SetActive(false);
+			pooledBullets.Add(obj);
+		}
     }
 
-    public GameObject GetPooledObject()
+    public GameObject GetPooledGrid()
     {
-        for (int i=0; i<pooledObjects.Count; i++)
+        for (int i=0; i<pooledGrids.Count; i++)
         {
-            if (!pooledObjects[i].activeInHierarchy)
+			if (!pooledGrids[i].activeInHierarchy)
             {
-                return pooledObjects[i];
+				return pooledGrids[i];
             }
         }
 
-        if (canGrow)
+        if (gridGrow)
         {
-            GameObject obj = (GameObject)Instantiate(pooledObject);
-            pooledObjects.Add(obj);
+            GameObject obj = (GameObject)Instantiate(gridObject);
+			pooledGrids.Add(obj);
             return obj;
         }
         return null;
     }
+
+	public GameObject GetPooledBullet()
+	{
+		for (int i=0; i<pooledBullets.Count; i++)
+		{
+			if (!pooledBullets[i].activeInHierarchy)
+			{
+				return pooledBullets[i];
+			}
+		}
+
+		if (bulletGrow)
+		{
+			GameObject obj = (GameObject)Instantiate(bulletObject);
+			pooledBullets.Add(obj);
+			return obj;
+		}
+		return null;
+	}
 }

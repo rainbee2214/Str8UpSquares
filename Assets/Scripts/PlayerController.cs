@@ -50,6 +50,11 @@ OuyaSDK.IResumeListener
 		OuyaSDK.registerResumeListener(this);
 		UnityEngine.Input.ResetInputAxes();
 	}
+
+	void Start()
+	{
+		speed = startSpeed;
+	}
 	void OnDestroy()
 	{
 		//Stop Ouya Input
@@ -164,7 +169,7 @@ OuyaSDK.IResumeListener
 		}
 
 		//Apply movement vector
-		rigidbody2D.velocity = direction * speed;
+		rigidbody2D.velocity = moveDirection * speed;
 		#endregion
 
 		#region Weapons

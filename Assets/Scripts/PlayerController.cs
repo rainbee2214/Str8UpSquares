@@ -9,7 +9,7 @@ OuyaSDK.IPauseListener,
 OuyaSDK.IResumeListener 
 {
 	//Player Stats
-	public int startSpeed = 3;   	// Player Move Speed
+	public int startSpeed =5;   	// Player Move Speed
 	public int boostedSpeed = 6;	//Turbo speed
 	private int speed;
 	
@@ -38,7 +38,7 @@ OuyaSDK.IResumeListener
 	public float speedUpTimeLength; 	//How long the player will be sped up for
 	
 	//GUI Ammo Reference
-	public GUIText ammoText;
+	//public GUIText ammoText;
 
 	#region Enter/Exit Script
 	void Awake()
@@ -195,7 +195,7 @@ OuyaSDK.IResumeListener
 		}
 
 		//Update GUI Ammo count
-		ammoText.text = "Ammo: " + currentMissileAmount + " / " + missileReloads;
+		//ammoText.text = "Ammo: " + currentMissileAmount + " / " + missileReloads;
 		#endregion
 	}
 

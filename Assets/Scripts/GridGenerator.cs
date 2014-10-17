@@ -40,8 +40,8 @@ public class GridGenerator : MonoBehaviour
 	void Start () 
 	{
 		walls = new GameObject[4];
-		currentWidth = startingWidth;
-		currentHeight = startingHeight;
+		//currentWidth = startingWidth;
+		//currentHeight = startingHeight;
 		startingColour = Random.Range(0,7);
 		currentColour = startingColour;
 		generateGrid(currentWidth,currentHeight, currentColour);
@@ -50,7 +50,7 @@ public class GridGenerator : MonoBehaviour
 	void Update () 
 	{	
 		tempScore++;
-		if (tempScore > threshhold) threshholdReached = true;
+		//if (tempScore > threshhold) threshholdReached = true;
 		if (threshholdReached)
 		{
 			deleteGrid();

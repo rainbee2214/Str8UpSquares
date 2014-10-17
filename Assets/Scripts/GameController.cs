@@ -8,9 +8,9 @@ public class GameController : MonoBehaviour
 {
 	//Static reference to the GameController class
 	public static GameController controller;
-	
+
 	//GUI References
-	public GUIText scoreText;
+	public GUIText fps;
 	//Game Stats		
 	public bool typeMouseClick;
 	public bool typeMouseOver;
@@ -79,7 +79,8 @@ public class GameController : MonoBehaviour
 	
 	void Update()
 	{
-		scoreText.text = "Score: " + score;
+		//fps.text = "Score: " + score;
+		//Debug.Log (score);
 	}
 	
 	void OnGUI()

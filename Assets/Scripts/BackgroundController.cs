@@ -21,13 +21,15 @@ public class BackgroundController : MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other.tag != "Wall" && other.tag != "GridEnemy") other.renderer.enabled = true;
+		if (other.tag != "Wall" && other.tag != "GridEnemy" && other.tag != "MissileUI"  && other.tag != "PlayerUI") 
+			other.renderer.enabled = true;
 	}
 
 	void OnTriggerExit2D(Collider2D other)
 	{
-		if (other.tag != "Wall" && other.tag != "GridEnemy") other.renderer.enabled = false;
-		if (other.tag == "Missile") Destroy(other.gameObject);
+		if (other.tag != "Wall" && other.tag != "GridEnemy" && other.tag != "MissileUI" && other.tag != "PlayerUI") 
+			other.renderer.enabled = false;
+		if (other.tag == "Missile" || other.tag == "MissileUI") Destroy(other.gameObject);
 	}
 
 	void OnTriggerStay2D(Collider2D other)

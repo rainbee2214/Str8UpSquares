@@ -5,12 +5,13 @@ public class LevelTracker : MonoBehaviour {
 	
 	public GameObject flipFlop;
 	public int n = 16;
+
 	GameObject[] flipFlops;
-	GameObject f;
 	int state;
 	int currentScore;
 	int lastScore;
 	public bool flip;
+
 	// Use this for initialization
 	void Start () {
 		lastScore = 0;
@@ -22,7 +23,7 @@ public class LevelTracker : MonoBehaviour {
 
 			flipFlops[i].name = "FlipFlop:" + i;
 			flipFlops[i].transform.parent = this.transform;
-			Vector3 position = new Vector3(19-i, 19, 1);
+			Vector3 position = new Vector3(n-i, 0, 1);
 			flipFlops[i].transform.position = position;
 		}
 	}

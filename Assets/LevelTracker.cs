@@ -2,15 +2,19 @@
 using System.Collections;
 
 public class LevelTracker : MonoBehaviour {
-
+	
 	public GameObject flipFlop;
 	public int n = 16;
 	GameObject[] flipFlops;
 	GameObject f;
 	int state;
+	int currentScore;
+	int lastScore;
 	public bool flip;
 	// Use this for initialization
 	void Start () {
+		lastScore = 0;
+		currentScore = GameController.controller.Score;
 		flipFlops = new GameObject[n];
 		for(int i = 0; i < n; i++)
 		{
@@ -26,12 +30,14 @@ public class LevelTracker : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+		currentScore = GameController.controller.Score;
 		int index = 0;
 		int afterFlip = 0;
-		if(flip)
+		//Debug.Log (currentScore + " " + lastScore);
+		if(currentScore > lastScore)
 		{
-
 			flipABit ();
+			lastScore = currentScore;
 		}
 	
 	}
@@ -51,7 +57,7 @@ public class LevelTracker : MonoBehaviour {
 		}
 		//Debug.Log (getDecimal());
 		float decimalValue = getDecimal ();
-		Debug.Log (decimalValue);
+		//Debug.Log (decimalValue);
 	}
 
 	float getDecimal()

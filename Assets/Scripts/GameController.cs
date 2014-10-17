@@ -8,7 +8,7 @@ public class GameController : MonoBehaviour
 {
 	//Static reference to the GameController class
 	public static GameController controller;
-	
+
 	//GUI References
 	public GUIText scoreText;
 	//Game Stats		
@@ -79,7 +79,8 @@ public class GameController : MonoBehaviour
 	
 	void Update()
 	{
-		scoreText.text = "Score: " + score;
+		//scoreText.text = "Score: " + score;
+		//Debug.Log (score);
 	}
 	
 	void OnGUI()

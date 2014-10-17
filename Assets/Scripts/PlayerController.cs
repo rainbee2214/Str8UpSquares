@@ -36,9 +36,9 @@ OuyaSDK.IResumeListener
 	private bool spedUp; 				//is the player sped up?
 	public float scaleUpTimeLength; 	//How long the player will be scaled up for
 	public float speedUpTimeLength; 	//How long the player will be sped up for
-	
+
 	//GUI Ammo Reference
-	public GUIText ammoText;
+	//public GUIText ammoText;
 
 	#region Enter/Exit Script
 	void Awake()
@@ -195,7 +195,7 @@ OuyaSDK.IResumeListener
 		}
 
 		//Update GUI Ammo count
-		ammoText.text = "Ammo: " + currentMissileAmount + " / " + missileReloads;
+		//ammoText.text = "Ammo: " + currentMissileAmount + " / " + missileReloads;
 		#endregion
 	}
 

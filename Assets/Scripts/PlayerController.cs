@@ -9,7 +9,7 @@ OuyaSDK.IPauseListener,
 OuyaSDK.IResumeListener 
 {
 	//Player Stats
-	public int startSpeed = 3;   	// Player Move Speed
+	public int startSpeed =5;   	// Player Move Speed
 	public int boostedSpeed = 6;	//Turbo speed
 	private int speed;
 	
@@ -36,7 +36,7 @@ OuyaSDK.IResumeListener
 	private bool spedUp; 				//is the player sped up?
 	public float scaleUpTimeLength; 	//How long the player will be scaled up for
 	public float speedUpTimeLength; 	//How long the player will be sped up for
-
+	
 	//GUI Ammo Reference
 	//public GUIText ammoText;
 

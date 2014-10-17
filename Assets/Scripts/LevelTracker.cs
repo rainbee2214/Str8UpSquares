@@ -57,7 +57,7 @@ public class LevelTracker : MonoBehaviour {
 		}
 		//Debug.Log (getDecimal());
 		float decimalValue = getDecimal ();
-		//Debug.Log (decimalValue);
+		Debug.Log (decimalValue);
 	}
 
 	float getDecimal()

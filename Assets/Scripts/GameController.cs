@@ -10,7 +10,7 @@ public class GameController : MonoBehaviour
 	public static GameController controller;
 
 	//GUI References
-	public GUIText scoreText;
+	public GUIText fps;
 	//Game Stats		
 	public bool typeMouseClick;
 	public bool typeMouseOver;
@@ -79,7 +79,7 @@ public class GameController : MonoBehaviour
 	
 	void Update()
 	{
-		//scoreText.text = "Score: " + score;
+		//fps.text = "Score: " + score;
 		//Debug.Log (score);
 	}
 	

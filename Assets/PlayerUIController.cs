@@ -19,11 +19,25 @@ public class PlayerUIController : MonoBehaviour
 	public float fireRate = 0.12f; 		//Fire speed
 	public float missileSpeed = 12; 	//Missile speed
 
+	//Missile Pool
+	int poolSize = 10;
+	List<GameObject> missilePool;
+	List<GameObject> currentMissiles;
+
 	public Vector3 desiredPosition;
 	public string direction;
 	int currentDirection; // 0 = up, 1 = right, 2 = down, 3 = left
 	void Start () 
 	{
+		missilePool = new List<GameObject>();
+		currentMissiles = new List<GameObject>();
+		//Create missilePool;
+		for(int i = 0; i < poolSize; i++)
+		{
+			GameObject temp = Instantiate (missile) as GameObject;
+			missilePool.Add(temp);
+		}
+
 		switch (direction)
 		{
 		case "up":
@@ -55,18 +69,27 @@ public class PlayerUIController : MonoBehaviour
 	{
 		if (Time.time > nextFireTime)
 		{
-			Shoot();
-			nextFireTime = Time.time + fireRate;
+			if (missilePool.Count != 0)
+			{
+				Shoot();
+				nextFireTime = Time.time + fireRate;
+			}
+		}
+
+		// When a missile is past the grid, it should be removed from current and added back into the pool
+		// Check is missile is touching grid, if not, add it to pool
+		for (int i = 0; i < currentMissiles.Count; i++)
+		{
+			if(currentMissiles[i])
+			{
+				
+			}
 		}
 	}
 
 	// Add object pooling. Easy to do, but I don't feel like doing it right now
 	void Shoot()
-	{
-		//Instantiate the missile, save the reference, name it
-		GameObject temp = Instantiate (missile, transform.position, Quaternion.identity) as GameObject;
-		temp.name = ("Missile:"+missileReloads+currentMissileAmount);
-		
+	{		
 		//Movement Variables
 		Vector2 missileDirection = new Vector2(0f,0f);
 		
@@ -89,13 +112,19 @@ public class PlayerUIController : MonoBehaviour
 			break;
 		}
 
-		
-		
+		// Get a missile from the pool
+		GameObject missile = missilePool[0];
+		missilePool.RemoveAt(0);
+		currentMissiles.Add(missile);
+		// Change position of a missile in the pool
+
 		//Apply direction * speed, save reference, update ammo count
-		temp.rigidbody2D.velocity = missileDirection * missileSpeed;
-		missiles.Add(temp);
-		currentMissileAmount--;
+		missile.rigidbody2D.velocity = missileDirection * missileSpeed;;
 	}
 
-
+	void OnTriggerEnter2D (Collider2D other) 
+	{
+		Debug.Log("Trigger!" + this.name);
+		
+	}
 }

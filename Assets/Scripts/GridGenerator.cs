@@ -89,7 +89,7 @@ public class GridGenerator : MonoBehaviour
 				grid[y*width + x].gameObject.GetComponent<GridSquareController>().currentColour = colour;
 
 				grid[y*width + x].name = ("Grid Square" + ": (" + x + "," + y + ")");
-				grid[y*width + x].gameObject.transform.position = new Vector2((width-x) - (width/2),(y-height) + (height/2));
+				grid[y*width + x].gameObject.transform.position = new Vector2((width-x),(height-y));
 			}
 		}
 
@@ -107,10 +107,10 @@ public class GridGenerator : MonoBehaviour
 		walls[2].transform.localScale = new Vector3(1, height, 1);
 		walls[3].transform.localScale = new Vector3(1, height, 1);
 		
-		walls[0].transform.position = new Vector2((width - 1)/ 2,height);			// Top
-		walls[1].transform.position = new Vector2((width - 1)/ 2,-1);				// Bottom
-		walls[2].transform.position = new Vector2(-1,(height - 1) / 2);  			// Left
-		walls[3].transform.position = new Vector2(width,(height - 1) / 2);			// Right
+		walls[0].transform.position = new Vector2(((width)/ 2) + 0.5f,height + 1);			// Top
+		walls[1].transform.position = new Vector2(((width)/ 2) + 0.5f,0);				// Bottom
+		walls[2].transform.position = new Vector2(0,((height) / 2) + 1);  			// Left
+		walls[3].transform.position = new Vector2(width+1,((height) / 2) +1);			// Right
 		
 
 

@@ -3,7 +3,8 @@ using System.Collections;
 
 public class BackgroundController : MonoBehaviour 
 {
-
+	Vector3 position;
+	public GameObject player;
 	void Start () 
 	{
 	
@@ -11,9 +12,8 @@ public class BackgroundController : MonoBehaviour
 
 	void Update () 
 	{
-		//int size = 0;
-		//size = gridGenerator.gameObject.GetComponent<GridGenerator>().currentWidth;
-		//gameObject.transform.localScale = new Vector3(size,size,1);
+		position = player.transform.position;
+		gameObject.transform.position = position;
 	}
 
 	void OnTriggerEnter2D(Collider2D other)

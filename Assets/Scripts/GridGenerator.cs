@@ -87,7 +87,7 @@ public class GridGenerator : MonoBehaviour
 				grid[y*width + x].gameObject.GetComponent<GridSquareController>().currentColour = colour;
 
 				grid[y*width + x].name = ("Grid Square" + ": (" + x + "," + y + ")");
-				grid[y*width + x].gameObject.transform.position = new Vector2(width-x,y-height);
+				grid[y*width + x].gameObject.transform.position = new Vector2((width-x) - (width/2),(y-height) + (height/2));
 			}
 		}
 

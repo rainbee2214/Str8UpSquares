@@ -4,9 +4,6 @@ using System.Collections;
 public class BackgroundController : MonoBehaviour 
 {
 
-	public GameObject player;
-	public GameObject gridGenerator;
-
 	void Start () 
 	{
 	

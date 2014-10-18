@@ -19,7 +19,7 @@ public class GridSquareController : MonoBehaviour
 
 	void OnTriggerEnter2D (Collider2D other) 
 	{
-		if (other.tag != "Background")
+		if (other.tag != "Background" && other.tag != "Warp")
 		{
 			if (other.tag == "Player" || other.tag == "Missile")
 			{

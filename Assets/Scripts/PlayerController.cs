@@ -21,6 +21,11 @@ OuyaSDK.IResumeListener
 	
 	//Weapons
 	public GameObject missile; 			//Prefab of missile to shoot
+	public GameObject missile1; 		//Prefab of missile to shoot
+	public GameObject missile2;			//Prefab of missile to shoot
+	List<GameObject> missileSlots;
+	GameObject currentMissile;
+	public int currentMissileIndex;
 	public List<GameObject> missiles; 	//List of shot missiles
 	public int currentMissileAmount; 	//Amount of missiles currently loaded
 	public int missileReloads; 			//Clips remaining
@@ -54,6 +59,11 @@ OuyaSDK.IResumeListener
 	void Start()
 	{
 		speed = startSpeed;
+		missileSlots = new List<GameObject>();
+		missileSlots.Add(missile);
+		missileSlots.Add(missile1);
+		missileSlots.Add(missile2);
+		currentMissile = missileSlots[currentMissileIndex];
 	}
 	void OnDestroy()
 	{
@@ -86,6 +96,7 @@ OuyaSDK.IResumeListener
 
 	void Update()
 	{
+		currentMissile = missileSlots[currentMissileIndex];
 		#region Powerups
 		if (spedUp && Time.time > speedTime)
 		{
@@ -168,6 +179,18 @@ OuyaSDK.IResumeListener
 			moveDirection.x = 0;
 		}
 
+		if (Input.GetButtonUp("E"))
+		{
+			currentMissileIndex++;
+			if (currentMissileIndex > 2) currentMissileIndex = 0;
+		}
+
+//		if (Input.GetButtonUp("R"))
+//		{
+//			currentMissileIndex--;
+//			if (currentMissileIndex < 0) currentMissileIndex = 2;
+//		}
+
 		//Apply movement vector
 		rigidbody2D.velocity = moveDirection * speed;
 		#endregion
@@ -203,7 +226,7 @@ OuyaSDK.IResumeListener
 	void Shoot()
 	{
 		//Instantiate the missile, save the reference, name it
-		GameObject temp = Instantiate (missile, transform.position, Quaternion.identity) as GameObject;
+		GameObject temp = Instantiate (currentMissile, transform.position, Quaternion.identity) as GameObject;
 		temp.name = ("Missile:"+missileReloads+currentMissileAmount);
 
 		//Movement Variables

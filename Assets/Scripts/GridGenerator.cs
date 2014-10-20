@@ -3,7 +3,9 @@ using System.Collections;
 
 public class GridGenerator : MonoBehaviour 
 {
-	public static GridGenerator gridGenerator;
+	//public static GridGenerator gridGenerator;
+
+	Vector2 startPosition;
 
 	public GameObject wall;
 	public GameObject[] walls;
@@ -37,6 +39,7 @@ public class GridGenerator : MonoBehaviour
 	
 	void Start () 
 	{
+		startPosition = gameObject.transform.parent.position;
 		walls = new GameObject[4];
 		//currentWidth = startingWidth;
 		//currentHeight = startingHeight;
@@ -49,17 +52,17 @@ public class GridGenerator : MonoBehaviour
 	{	
 		tempScore++;
 		//if (tempScore > threshhold) threshholdReached = true;
-		if (threshholdReached)
-		{
-			deleteGrid();
-			currentWidth+=2;
-			currentHeight+=2;
-			currentColour++;
-			if (currentColour == 7) currentColour = 0;
-			generateGrid(currentWidth,currentHeight, currentColour);
-			threshholdReached = false;
-			threshhold *= 2;
-		}
+//		if (threshholdReached)
+//		{
+//			deleteGrid();
+//			currentWidth+=2;
+//			currentHeight+=2;
+//			currentColour++;
+//			if (currentColour == 7) currentColour = 0;
+//			generateGrid(currentWidth,currentHeight, currentColour);
+//			threshholdReached = false;
+//			threshhold *= 2;
+//		}
 		Size = currentWidth;
 	}
 	
@@ -78,6 +81,7 @@ public class GridGenerator : MonoBehaviour
 	
 	void generateGrid (int width, int height, int colour)
 	{
+		Vector2 offset = startPosition;
 		grid = new GameObject[width*height];
 		timesGenerated++;
 
@@ -89,7 +93,7 @@ public class GridGenerator : MonoBehaviour
 				grid[y*width + x].gameObject.GetComponent<GridSquareController>().currentColour = colour;
 
 				grid[y*width + x].name = ("Grid Square" + ": (" + x + "," + y + ")");
-				grid[y*width + x].gameObject.transform.position = new Vector2((width-x),(height-y));
+				grid[y*width + x].gameObject.transform.position = new Vector2((width-x) + offset.x,(height-y) + offset.y);
 			}
 		}
 
@@ -107,11 +111,11 @@ public class GridGenerator : MonoBehaviour
 		walls[2].transform.localScale = new Vector3(1, height, 1);
 		walls[3].transform.localScale = new Vector3(1, height, 1);
 		
-		walls[0].transform.position = new Vector2(((width)/ 2) + 0.5f,height + 1);			// Top
-		walls[1].transform.position = new Vector2(((width)/ 2) + 0.5f,0);				// Bottom
-		walls[2].transform.position = new Vector2(0,((height) / 2) + 1);  			// Left
-		walls[3].transform.position = new Vector2(width+1,((height) / 2) +1);			// Right
-		
+		walls[0].transform.position = new Vector2((((width)/ 2) + 0.5f) + offset.x, (height + 1) + offset.y);		// Top
+		walls[1].transform.position = new Vector2( (((width)/ 2) + 0.5f) + offset.x, 0 + offset.y);					// Bottom
+		walls[2].transform.position = new Vector2(0 + offset.x,(((height) / 2) + 1) + offset.y);  					// Left
+		walls[3].transform.position = new Vector2((width + 1) + offset.x,(((height) / 2) +1) + offset.y);			// Right
+	
 
 
 
@@ -119,17 +123,17 @@ public class GridGenerator : MonoBehaviour
 	
 	void Awake () 
 	{
-		//if control is not set, set it to this one and allow it to persist
-		if (gridGenerator == null)
-		{
-			DontDestroyOnLoad(gameObject);
-			gridGenerator = this;
-		}
-		//else if control exists and it isn't this instance, destroy this instance
-		else if(gridGenerator != this)
-		{
-			Debug.Log ("Game control already exists, deleting this new one");
-			Destroy (gameObject);
-		}
+//		//if control is not set, set it to this one and allow it to persist
+//		if (gridGenerator == null)
+//		{
+//			DontDestroyOnLoad(gameObject);
+//			gridGenerator = this;
+//		}
+//		//else if control exists and it isn't this instance, destroy this instance
+//		else if(gridGenerator != this)
+//		{
+//			Debug.Log ("Game control already exists, deleting this new one");
+//			Destroy (gameObject);
+//		}
 	}
 }

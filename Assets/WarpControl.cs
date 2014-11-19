@@ -7,7 +7,8 @@ public class WarpControl : MonoBehaviour
 	public GameObject warpPartner;
 
 	public Vector2 currentPosition;
-
+	public GameObject player;
+	bool warpActive;
 
 	void Start()
 	{
@@ -23,16 +24,38 @@ public class WarpControl : MonoBehaviour
 	{
 		if (transform.position.x != currentPosition.x || transform.position.y != currentPosition.y) 
 			transform.position = currentPosition;
-	}
-
-	void OnTriggerStay(Collider other)
-	{
-		Debug.Log(other.tag);
-		if (other.tag == "Player") Debug.Log("Yes.");
-		if (Input.GetButtonDown("Warp"))// && other.tag == "Player")
+		if ((Input.GetButtonDown("Warp")) && warpActive)
 		{
 			Debug.Log("Warp");
-			other.transform.position = warpPartner.transform.position;
+			player.gameObject.GetComponent<PlayerControl>().position  = warpPartner.transform.position;
+			//warpActive = false;
+			//player.transform.position = warpPartner.transform.position;
+		}
+	}
+
+//	void OnTriggerStay(Collider other)
+//	{
+//		if (other.tag == "Player") 
+//		{
+//			warpActive = true;
+//
+//		}
+//	}
+
+	void OnTriggerEnter(Collider other)
+	{
+		if (other.tag == "Player")
+		{
+			
+			Debug.Log("Yes.");
+			warpActive = true;
+		}
+	}
+	void OnTriggerExit(Collider other)
+	{
+		if (other.tag == "Player")
+		{
+			warpActive = false;
 		}
 	}
 

@@ -183,7 +183,7 @@ OuyaSDK.IResumeListener
 		{
 			currentMissileIndex++;
 			if (currentMissileIndex > 2) currentMissileIndex = 0;
-		}
+		} 
 
 //		if (Input.GetButtonUp("R"))
 //		{

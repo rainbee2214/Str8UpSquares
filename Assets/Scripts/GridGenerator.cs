@@ -28,7 +28,7 @@ public class GridGenerator : MonoBehaviour
         {
             squares[i].name = "Square" + i;
             squares[i].transform.parent = transform;
-            squares[i].renderer.material = Resources.Load("Materials/GridSquare") as Material;
+            squares[i].renderer.material = Instantiate(Resources.Load("Materials/GridSquare", typeof(Material))) as Material;
         }
     }
 }
